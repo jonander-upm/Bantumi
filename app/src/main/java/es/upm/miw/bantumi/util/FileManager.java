@@ -3,8 +3,12 @@ package es.upm.miw.bantumi.util;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class FileManager {
@@ -30,6 +34,24 @@ public class FileManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String load() {
+        StringBuilder data = new StringBuilder();
+        try(BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(context.openFileInput(this.fileName)))) {
+            String line = reader.readLine();
+            while(line != null){
+                data.append(line);
+                line =  reader.readLine();
+                if(line != null) {
+                    data.append("\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return data.toString();
     }
 
     private static class Builder implements FileManagerBuilders.ApplicationContext, FileManagerBuilders.FileName,

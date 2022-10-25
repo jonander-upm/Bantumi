@@ -140,8 +140,19 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.opcGuardarPartida:
                 juegoBantumi.guardar(fileManager);
-                Toast.makeText(this, "Se ha guardado la partida", Toast.LENGTH_SHORT).show();
+                Snackbar.make(
+                        findViewById(android.R.id.content),
+                        getString(R.string.txtPartidaGuardada),
+                        Snackbar.LENGTH_LONG
+                ).show();
                 break;
+            case R.id.opcRecuperarPartida:
+                if(!this.juegoBantumi.juegoTerminado()) {
+                    new OverwriteAlertDialog().show(getSupportFragmentManager(), "OVERWRITE_DIALOG");
+                } else {
+                    this.cargarPartida();
+                }
+
             default:
                 Snackbar.make(
                         findViewById(android.R.id.content),
@@ -208,5 +219,14 @@ public class MainActivity extends AppCompatActivity {
 
         // @TODO guardar puntuación
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
+    }
+
+    public void cargarPartida() {
+        juegoBantumi.recuperar(fileManager);
+        Snackbar.make(
+                findViewById(android.R.id.content),
+                getString(R.string.txtPartidaRecuperada),
+                Snackbar.LENGTH_LONG
+        ).show();
     }
 }

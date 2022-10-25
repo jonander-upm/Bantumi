@@ -20,8 +20,8 @@ public class JuegoBantumi {
     // Posiciones 7-12: campo jugador 2
     // Posición 13: depósito jugador 2
 
-    public static final char SEPARADOR_CLAVE_VALOR = '|';
-    public static final char SEPARADOR_LINEA = '\n';
+    public static final String SEPARADOR_CLAVE_VALOR = ":";
+    public static final String SEPARADOR_LINEA = "\n";
 
     private final BantumiViewModel bantumiVM;
 
@@ -216,11 +216,32 @@ public class JuegoBantumi {
      * @param juegoSerializado cadena que representa el estado completo del juego
      */
     public void deserializa(String juegoSerializado) {
-        // @TODO
+        Map<String, String> datos = new HashMap<>();
+        String[] lineas = juegoSerializado.split(SEPARADOR_LINEA);
+        for(String linea : lineas) {
+            String[] claveValor = linea.split(SEPARADOR_CLAVE_VALOR);
+            datos.put(claveValor[0], claveValor[1]);
+        }
+        cargarDatos(datos);
+    }
+
+    public void cargarDatos(Map<String, String> datos) {
+        this.setTurno((Objects.equals(datos.get("turno"), "turnoJ1"))
+                ? Turno.turnoJ1
+                :Turno.turnoJ2);
+        List<Integer> semillasTablero = this.bantumiVM.deserializa(Objects.requireNonNull(datos.get("tablero")));
+        for(int i = 0; i < semillasTablero.size(); i++) {
+            this.bantumiVM.setNumSemillas(i, semillasTablero.get(i));
+        }
     }
 
     public void guardar(FileManager fileManager) {
         String datos = this.serializa();
         fileManager.save(datos);
+    }
+
+    public void recuperar(FileManager fileManager) {
+        String datos = fileManager.load();
+        this.deserializa(datos);
     }
 }
