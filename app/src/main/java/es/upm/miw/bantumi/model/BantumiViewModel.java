@@ -6,10 +6,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import es.upm.miw.bantumi.JuegoBantumi;
 
 public class BantumiViewModel extends ViewModel {
+    public static final char SEPARADOR_LISTA_VALORES = ';';
 
     private ArrayList<MutableLiveData<Integer>> tablero;
 
@@ -64,5 +67,31 @@ public class BantumiViewModel extends ViewModel {
             throw new ArrayIndexOutOfBoundsException();
         }
         tablero.get(pos).setValue(v);
+    }
+
+    /**
+     * Devuelve el tablero
+     *
+     * @return el estado actual del tablero
+     */
+    public ArrayList<MutableLiveData<Integer>> getTablero() {
+        return this.tablero;
+    }
+
+    /**
+     * Devuelve el tablero serializado
+     *
+     * @return el estado actual del tablero
+     */
+    public String serializa() {
+        StringBuilder tableroSerializado = new StringBuilder();
+        for(int i = 0; i < tablero.size(); i++) {
+            Integer semillas = Objects.requireNonNull(tablero.get(i).getValue());
+            tableroSerializado.append(semillas);
+            if(i < tablero.size()-1) {
+                tableroSerializado.append(SEPARADOR_LISTA_VALORES);
+            }
+        }
+        return tableroSerializado.toString();
     }
 }

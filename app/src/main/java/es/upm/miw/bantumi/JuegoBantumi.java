@@ -2,7 +2,15 @@ package es.upm.miw.bantumi;
 
 import android.util.Log;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import es.upm.miw.bantumi.model.BantumiViewModel;
+import es.upm.miw.bantumi.util.FileManager;
 
 public class JuegoBantumi {
 
@@ -11,6 +19,9 @@ public class JuegoBantumi {
     // Posición 6: depósito jugador 1
     // Posiciones 7-12: campo jugador 2
     // Posición 13: depósito jugador 2
+
+    public static final char SEPARADOR_CLAVE_VALOR = '|';
+    public static final char SEPARADOR_LINEA = '\n';
 
     private final BantumiViewModel bantumiVM;
 
@@ -192,8 +203,11 @@ public class JuegoBantumi {
      * @return juego serializado
      */
     public String serializa() {
-        // @TODO
-        return null;
+        String datos = "";
+        datos = datos.concat("fecha" + SEPARADOR_CLAVE_VALOR + new Date().getTime() + SEPARADOR_LINEA);
+        datos = datos.concat("tablero" + SEPARADOR_CLAVE_VALOR + this.bantumiVM.serializa() + SEPARADOR_LINEA);
+        datos = datos.concat("turno" + SEPARADOR_CLAVE_VALOR + Objects.requireNonNull(this.bantumiVM.getTurno().getValue()).toString());
+        return datos;
     }
 
     /**
@@ -203,5 +217,10 @@ public class JuegoBantumi {
      */
     public void deserializa(String juegoSerializado) {
         // @TODO
+    }
+
+    public void guardar(FileManager fileManager) {
+        String datos = this.serializa();
+        fileManager.save(datos);
     }
 }

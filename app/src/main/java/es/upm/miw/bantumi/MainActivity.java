@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +19,15 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
+import es.upm.miw.bantumi.util.FileManager;
 
 public class MainActivity extends AppCompatActivity {
 
     protected final String LOG_TAG = "MiW";
+    protected final String NOMBRE_FICHERO = "partida.txt";
     JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
+    FileManager fileManager;
     int numInicialSemillas;
 
     @Override
@@ -36,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
         crearObservadores();
+        fileManager = FileManager.builder()
+                .applicationContext(this)
+                .fileName(NOMBRE_FICHERO)
+                .storageSystem(FileManager.StorageSystem.FILE_SYSTEM)
+                .build();
     }
 
     /**
@@ -128,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.opcReiniciarPartida:
                 new RestartAlertDialog().show(getSupportFragmentManager(), "RESTART_DIALOG");
+                break;
+            case R.id.opcGuardarPartida:
+                juegoBantumi.guardar(fileManager);
+                Toast.makeText(this, "Se ha guardado la partida", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Snackbar.make(
