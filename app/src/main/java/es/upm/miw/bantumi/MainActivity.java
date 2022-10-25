@@ -126,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton(android.R.string.ok, null)
                         .show();
                 return true;
-
-            // @TODO!!! resto opciones
-
+            case R.id.opcReiniciarPartida:
+                new RestartAlertDialog().show(getSupportFragmentManager(), "RESTART_DIALOG");
+                break;
             default:
                 Snackbar.make(
                         findViewById(android.R.id.content),

@@ -48,5 +48,9 @@
     <string name="txtDialogoFinalPregunta">¿Desea jugar otra partida?</string>
     <string name="txtDialogoFinalAfirmativo">Sí</string>
     <string name="txtDialogoFinalNegativo">No</string>
+    <string name="txtDialogoReinicioPregunta">¿Desea reniniciar el juego?</string>
+    <string name="txtDialogoReinicioTitulo">Reiniciar juego</string>
+    <string name="txtDialogoReinicioAfirmativo">Reiniciar</string>
+    <string name="txtDialogoReinicioNegativo">Cancelar</string>
 
 </resources>
