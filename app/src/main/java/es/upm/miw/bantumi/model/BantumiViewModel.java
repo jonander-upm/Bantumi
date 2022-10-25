@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import es.upm.miw.bantumi.JuegoBantumi;
 
 public class BantumiViewModel extends ViewModel {
-    public static final char SEPARADOR_LISTA_VALORES = ';';
+    public static final String SEPARADOR_LISTA_VALORES = ";";
 
     private ArrayList<MutableLiveData<Integer>> tablero;
 
@@ -93,5 +94,14 @@ public class BantumiViewModel extends ViewModel {
             }
         }
         return tableroSerializado.toString();
+    }
+
+    public List<Integer> deserializa(String tableroSerializado) {
+        List<Integer> semillas = new ArrayList<>();
+        String[] semillasString = tableroSerializado.split(SEPARADOR_LISTA_VALORES);
+        for (String semillaStr : semillasString) {
+            semillas.add(Integer.parseInt(semillaStr));
+        }
+        return semillas;
     }
 }

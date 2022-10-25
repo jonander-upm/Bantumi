@@ -52,5 +52,11 @@
     <string name="txtDialogoReinicioTitulo">Reiniciar juego</string>
     <string name="txtDialogoReinicioAfirmativo">Reiniciar</string>
     <string name="txtDialogoReinicioNegativo">Cancelar</string>
+    <string name="txtPartidaGuardada">¡Partida guardada!</string>
+    <string name="txtPartidaRecuperada">¡Se ha recuperado la partida!</string>
+    <string name="txtDialogoSobreescribirTitulo">Recuperar partida</string>
+    <string name="txtDialogoSobreescribirPregunta">Se va a sobreescribir la partida actual. ¿Desea continuar?</string>
+    <string name="txtDialogoSobreescribirAfirmativo">Sobreescribir</string>
+    <string name="txtDialogoSobreescribirNegativo">Cancelar</string>
 
 </resources>

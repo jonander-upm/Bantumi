@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-public class RestartAlertDialog extends AppCompatDialogFragment {
+public class OverwriteAlertDialog extends AppCompatDialogFragment {
     @NonNull
     @Override
 	public AppCompatDialog onCreateDialog(Bundle savedInstanceState) {
@@ -17,19 +17,19 @@ public class RestartAlertDialog extends AppCompatDialogFragment {
         assert main != null;
         AlertDialog.Builder builder = new AlertDialog.Builder(main);
         builder
-                .setTitle(R.string.txtDialogoReinicioTitulo)
-                .setMessage(R.string.txtDialogoReinicioPregunta)
+                .setTitle(R.string.txtDialogoSobreescribirTitulo)
+                .setMessage(R.string.txtDialogoSobreescribirPregunta)
                 .setPositiveButton(
-                        getString(R.string.txtDialogoReinicioAfirmativo),
+                        getString(R.string.txtDialogoSobreescribirAfirmativo),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                main.juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1);
+                                main.cargarPartida();
                             }
                         }
                 )
                 .setNegativeButton(
-                        getString(R.string.txtDialogoReinicioNegativo),
+                        getString(R.string.txtDialogoSobreescribirNegativo),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
