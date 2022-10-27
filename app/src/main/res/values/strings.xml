@@ -63,5 +63,8 @@
     <string name="keyUsername">username</string>
     <string name="usernameDefault">Jugador 1</string>
     <string name="pref_user">pref_userPreferences</string>
+    <string name="txtScoreboard">Mejores Resultados</string>
+    <string name="txtPlayerScore">Puntuación Usuario:</string>
+    <string name="txtComputerScore">Puntuación Ordenador:</string>
 
 </resources>
