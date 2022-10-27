@@ -13,12 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
+import es.upm.miw.bantumi.model.PuntuacionEntity;
+import es.upm.miw.bantumi.model.PuntuacionViewModel;
 import es.upm.miw.bantumi.util.FileManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
     FileManager fileManager;
+    PuntuacionViewModel puntuacionViewModel;
     int numInicialSemillas;
 
     @Override
@@ -39,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
+        puntuacionViewModel = new ViewModelProvider(this).get(PuntuacionViewModel.class);
         crearObservadores();
         fileManager = FileManager.builder()
                 .applicationContext(this)
@@ -216,8 +225,9 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.LENGTH_LONG
         )
         .show();
+        PuntuacionEntity puntuacionEntity = new PuntuacionEntity("test", new Date(), juegoBantumi.getSemillasJugador(), juegoBantumi.getSemillasOponente());
+        this.puntuacionViewModel.insert(puntuacionEntity);
 
-        // @TODO guardar puntuación
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
     }
 

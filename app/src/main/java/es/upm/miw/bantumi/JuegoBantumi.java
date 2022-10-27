@@ -19,11 +19,21 @@ public class JuegoBantumi {
     // Posición 6: depósito jugador 1
     // Posiciones 7-12: campo jugador 2
     // Posición 13: depósito jugador 2
+    public static final int DEPOSITO_JUGADOR = 6;
+    public static final int DEPOSITO_OPONENTE = 13;
 
     public static final String SEPARADOR_CLAVE_VALOR = ":";
     public static final String SEPARADOR_LINEA = "\n";
 
     private final BantumiViewModel bantumiVM;
+
+    public Integer getSemillasJugador() {
+        return this.getSemillas(DEPOSITO_JUGADOR);
+    }
+
+    public Integer getSemillasOponente() {
+        return this.getSemillas(DEPOSITO_OPONENTE);
+    }
 
     // Turno juego
     public enum Turno {
