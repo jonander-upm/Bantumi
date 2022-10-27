@@ -58,5 +58,10 @@
     <string name="txtDialogoSobreescribirPregunta">Se va a sobreescribir la partida actual. ¿Desea continuar?</string>
     <string name="txtDialogoSobreescribirAfirmativo">Sobreescribir</string>
     <string name="txtDialogoSobreescribirNegativo">Cancelar</string>
+    <string name="txtUserPreferences">Preferencias de Usuario</string>
+    <string name="txtUsername">Nombre de Usuario</string>
+    <string name="keyUsername">username</string>
+    <string name="usernameDefault">Jugador 1</string>
+    <string name="pref_user">pref_userPreferences</string>
 
 </resources>

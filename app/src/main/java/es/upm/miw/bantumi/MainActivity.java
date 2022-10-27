@@ -1,6 +1,8 @@
 package es.upm.miw.bantumi;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,38 +15,64 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
+import es.upm.miw.bantumi.model.PuntuacionEntity;
+import es.upm.miw.bantumi.model.PuntuacionViewModel;
 import es.upm.miw.bantumi.util.FileManager;
 
 public class MainActivity extends AppCompatActivity {
 
     protected final String LOG_TAG = "MiW";
     protected final String NOMBRE_FICHERO = "partida.txt";
+    SharedPreferences preferencias;
+    String username;
+    TextView tvJugador1;
     JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
     FileManager fileManager;
+    PuntuacionViewModel puntuacionViewModel;
     int numInicialSemillas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        tvJugador1 = findViewById(R.id.tvPlayer1);
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
         numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
+        puntuacionViewModel = new ViewModelProvider(this).get(PuntuacionViewModel.class);
         crearObservadores();
         fileManager = FileManager.builder()
                 .applicationContext(this)
                 .fileName(NOMBRE_FICHERO)
                 .storageSystem(FileManager.StorageSystem.FILE_SYSTEM)
                 .build();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        username = preferencias.getString(
+                getString(R.string.keyUsername),
+                getString(R.string.usernameDefault));
+        if(username.equals("")) {
+            username = getString(R.string.usernameDefault);
+        }
+        tvJugador1.setText(username);
     }
 
     /**
@@ -80,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
      * @param turnoActual turno actual
      */
     private void marcarTurno(@NonNull JuegoBantumi.Turno turnoActual) {
-        TextView tvJugador1 = findViewById(R.id.tvPlayer1);
         TextView tvJugador2 = findViewById(R.id.tvPlayer2);
         switch (turnoActual) {
             case turnoJ1:
@@ -152,7 +179,11 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     this.cargarPartida();
                 }
-
+                break;
+            case R.id.opcAjustes:
+                Intent intent = new Intent(this, PreferenciasActivity.class);
+                startActivity(intent);
+                break;
             default:
                 Snackbar.make(
                         findViewById(android.R.id.content),
@@ -216,8 +247,9 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.LENGTH_LONG
         )
         .show();
+        PuntuacionEntity puntuacionEntity = new PuntuacionEntity(username, new Date(), juegoBantumi.getSemillasJugador(), juegoBantumi.getSemillasOponente());
+        this.puntuacionViewModel.insert(puntuacionEntity);
 
-        // @TODO guardar puntuación
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
     }
 
