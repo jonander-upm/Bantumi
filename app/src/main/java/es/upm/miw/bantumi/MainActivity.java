@@ -181,8 +181,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.opcAjustes:
-                Intent intent = new Intent(this, PreferenciasActivity.class);
-                startActivity(intent);
+                Intent intentAjustes = new Intent(this, PreferenciasActivity.class);
+                startActivity(intentAjustes);
+                break;
+            case R.id.opcMejoresResultados:
+                Intent intentPuntuaciones = new Intent(this, PuntuacionesActivity.class);
+                startActivity(intentPuntuaciones);
                 break;
             default:
                 Snackbar.make(
