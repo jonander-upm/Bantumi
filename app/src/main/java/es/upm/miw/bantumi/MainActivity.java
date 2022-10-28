@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tvJugador1 = findViewById(R.id.tvPlayer1);
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
-        numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
+        numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
         puntuacionViewModel = new ViewModelProvider(this).get(PuntuacionViewModel.class);
         crearObservadores();
@@ -73,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
             username = getString(R.string.usernameDefault);
         }
         tvJugador1.setText(username);
+        numInicialSemillas = Integer.parseInt(preferencias.getString(
+                getString(R.string.keySeedNumber),
+                String.valueOf(R.integer.intNumInicialSemillas)));
+        juegoBantumi.setNumInicialSemillas(numInicialSemillas);
     }
 
     /**

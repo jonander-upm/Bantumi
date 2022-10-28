@@ -12,4 +12,16 @@
             app:singleLine="true">
         </EditTextPreference>
     </PreferenceCategory>
+    <PreferenceCategory
+        android:key="@string/pref_game"
+        android:title="@string/txtGamePreferences">
+        <EditTextPreference
+            android:key="@string/keySeedNumber"
+            android:title="@string/txtSeedNumber"
+            android:inputType="number"
+            android:defaultValue="@integer/intNumInicialSemillas"
+            app:useSimpleSummaryProvider="true"
+            app:singleLine="true">
+        </EditTextPreference>
+    </PreferenceCategory>
 </PreferenceScreen>

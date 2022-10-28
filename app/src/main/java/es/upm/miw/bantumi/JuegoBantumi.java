@@ -35,13 +35,17 @@ public class JuegoBantumi {
         return this.getSemillas(DEPOSITO_OPONENTE);
     }
 
+    public void setNumInicialSemillas(int numInicialSemillas) {
+        this.numInicialSemillas = numInicialSemillas;
+    }
+
     // Turno juego
     public enum Turno {
         turnoJ1, turnoJ2, Turno_TERMINADO
     }
 
     // Número inicial de semillas
-    private final int numInicialSemillas;
+    private int numInicialSemillas;
 
     /**
      * Constructor

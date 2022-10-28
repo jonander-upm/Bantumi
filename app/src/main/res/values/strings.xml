@@ -72,5 +72,9 @@
     <string name="txtDialogoEliminarPuntuacionesPregunta">¿Desea eliminar todas las puntuaciones?</string>
     <string name="txtDialogoEliminarPuntuacionesNegativo">Cancelar</string>
     <string name="txtDialogoEliminarPuntuacionesAfirmativo">Eliminar</string>
+    <string name="pref_game">pref_gamePreferences</string>
+    <string name="txtGamePreferences">Preferencias el Juego</string>
+    <string name="keySeedNumber">seedNumber</string>
+    <string name="txtSeedNumber">Número de Semillas</string>
 
 </resources>
