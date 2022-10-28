@@ -25,21 +25,25 @@ public class PuntuacionEntity {
 
     private Integer opponentSeeds;
 
+    private Long gameDurationSecs;
+
     public PuntuacionEntity() {
     }
 
-    public PuntuacionEntity(@NonNull String username, Date date, Integer playerSeeds, Integer opponentSeeds) {
+    public PuntuacionEntity(@NonNull String username, Date date, Integer playerSeeds, Integer opponentSeeds, Long gameDurationSecs) {
         this.username = username;
         this.date = date;
         this.playerSeeds = playerSeeds;
         this.opponentSeeds = opponentSeeds;
+        this.gameDurationSecs = gameDurationSecs;
     }
 
+    @NonNull
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(@NonNull String username) {
         this.username = username;
     }
 
@@ -65,5 +69,13 @@ public class PuntuacionEntity {
 
     public void setOpponentSeeds(Integer opponentSeeds) {
         this.opponentSeeds = opponentSeeds;
+    }
+
+    public Long getGameDurationSecs() {
+        return gameDurationSecs;
+    }
+
+    public void setGameDurationSecs(Long gameDurationSecs) {
+        this.gameDurationSecs = gameDurationSecs;
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Dao
 public interface IPuntuacionDAO {
-    @Query("SELECT * FROM " + PuntuacionEntity.TABLA + " ORDER BY playerSeeds DESC, opponentSeeds ASC LIMIT 10")
+    @Query("SELECT * FROM " + PuntuacionEntity.TABLA + " ORDER BY playerSeeds DESC, opponentSeeds ASC, gameDurationSecs ASC LIMIT 10")
     LiveData<List<PuntuacionEntity>> findTopTen();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

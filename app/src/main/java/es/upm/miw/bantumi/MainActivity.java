@@ -38,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences preferencias;
     String username;
     TextView tvJugador1;
+    TextView tvTimer;
     JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
     FileManager fileManager;
     PuntuacionViewModel puntuacionViewModel;
     int numInicialSemillas;
+    Long duracionPartidaSegundos;
     JuegoBantumi.Turno turnoInicial;
 
     @Override
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         tvJugador1 = findViewById(R.id.tvPlayer1);
+        tvTimer = findViewById(R.id.tvTimer);
+        duracionPartidaSegundos = 0L;
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         loadGamePreferences();
@@ -65,11 +69,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        bantumiVM.pauseTimer();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         loadUserPreferences();
         loadGamePreferences();
+        bantumiVM.resumeTimer();
     }
 
     public void loadUserPreferences() {
@@ -118,6 +129,19 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(JuegoBantumi.Turno turno) {
                         marcarTurno(juegoBantumi.turnoActual());
+                    }
+                }
+        );
+        bantumiVM.getTimerMillis().observe(
+                this,
+                new Observer<Long>() {
+                    @Override
+                    public void onChanged(Long millis) {
+                        duracionPartidaSegundos = millis / 1000;
+                        int minutes = duracionPartidaSegundos.intValue() / 60;
+                        int seconds = duracionPartidaSegundos.intValue() % 60;
+                        String timeText = String.format("%d:%02d", minutes, seconds);
+                        tvTimer.setText(timeText);
                     }
                 }
         );
@@ -263,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
      * El juego ha terminado. Volver a jugar?
      */
     private void finJuego() {
+        bantumiVM.pauseTimer();
         String texto = (juegoBantumi.getSemillas(6) > 6 * numInicialSemillas)
                 ? "Gana Jugador 1"
                 : "Gana Jugador 2";
@@ -272,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.LENGTH_LONG
         )
         .show();
-        PuntuacionEntity puntuacionEntity = new PuntuacionEntity(username, new Date(), juegoBantumi.getSemillasJugador(), juegoBantumi.getSemillasOponente());
+        PuntuacionEntity puntuacionEntity = new PuntuacionEntity(username, new Date(), juegoBantumi.getSemillasJugador(), juegoBantumi.getSemillasOponente(), duracionPartidaSegundos);
         this.puntuacionViewModel.insert(puntuacionEntity);
 
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");

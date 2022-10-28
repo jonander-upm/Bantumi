@@ -97,6 +97,7 @@ public class JuegoBantumi {
                             ? 0
                             : numInicialSemillas
             );
+        bantumiVM.restartTimer();
     }
 
     /**

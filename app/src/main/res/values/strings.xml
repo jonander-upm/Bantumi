@@ -79,5 +79,8 @@
     <string name="keyFirstPlayer">firstPlayer</string>
     <string name="txtFirstPlayer">Jugador Inicial</string>
     <string name="txtRestartRequired">Se deberá reiniciar el juego para aplicar los cambios</string>
+    <string name="txtTimerSeparator">:</string>
+    <string name="txtTimerDefault">00:00</string>
+    <string name="txtDurationScore">Duración:</string>
 
 </resources>
