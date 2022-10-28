@@ -1,5 +1,7 @@
 package es.upm.miw.bantumi.model;
 
+import android.os.Handler;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -19,12 +21,28 @@ public class BantumiViewModel extends ViewModel {
 
     private MutableLiveData<JuegoBantumi.Turno> turno;
 
+    private MutableLiveData<Long> timerMillis;
+    long startTime;
+
+    Handler timerHandler;
+    Runnable timerRunnable;
+
     public BantumiViewModel() {
         turno = new MutableLiveData<>(JuegoBantumi.Turno.turnoJ1);
         tablero = new ArrayList<>(JuegoBantumi.NUM_POSICIONES);
         for (int i = 0; i < JuegoBantumi.NUM_POSICIONES; i++) {
             tablero.add(i, new MutableLiveData<>(0));
         }
+        startTime = System.currentTimeMillis();
+        timerMillis = new MutableLiveData<>(startTime);
+        timerHandler = new Handler();
+        timerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                timerMillis.setValue(System.currentTimeMillis() - startTime);
+                timerHandler.postDelayed(this, 500);
+            }
+        };
     }
 
     /**
@@ -103,5 +121,22 @@ public class BantumiViewModel extends ViewModel {
             semillas.add(Integer.parseInt(semillaStr));
         }
         return semillas;
+    }
+
+    public void pauseTimer() {
+        timerHandler.removeCallbacks(timerRunnable);
+    }
+
+    public void resumeTimer() {
+        timerHandler.postDelayed(timerRunnable, 0);
+    }
+
+    public void restartTimer() {
+        startTime = System.currentTimeMillis();
+        resumeTimer();
+    }
+
+    public MutableLiveData<Long> getTimerMillis() {
+        return timerMillis;
     }
 }

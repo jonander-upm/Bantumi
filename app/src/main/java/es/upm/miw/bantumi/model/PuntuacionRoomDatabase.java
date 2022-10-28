@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {PuntuacionEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {PuntuacionEntity.class}, version = 2, exportSchema = false)
 public abstract class PuntuacionRoomDatabase extends RoomDatabase {
     public static final String BASE_DATOS = PuntuacionEntity.TABLA + ".db";
 

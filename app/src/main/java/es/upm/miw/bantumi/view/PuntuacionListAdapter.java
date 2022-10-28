@@ -52,10 +52,14 @@ public class PuntuacionListAdapter extends BaseAdapter {
         TextView tvUsername = view.findViewById(R.id.tvUsername);
         TextView tvPlayerScore = view.findViewById(R.id.tvPlayerScore);
         TextView tvComputerScore = view.findViewById(R.id.tvComputerScore);
+        TextView durationScore = view.findViewById(R.id.tvDurationScore);
         if(puntuaciones != null) {
+            int minutes = puntuaciones.get(i).getGameDurationSecs().intValue() / 60;
+            int seconds = puntuaciones.get(i).getGameDurationSecs().intValue() % 60;
             tvUsername.setText(puntuaciones.get(i).getUsername());
             tvPlayerScore.setText(String.valueOf(puntuaciones.get(i).getPlayerSeeds()));
             tvComputerScore.setText(String.valueOf(puntuaciones.get(i).getOpponentSeeds()));
+            durationScore.setText(String.format("%d:%02d", minutes, seconds));
         }
         return view;
     }

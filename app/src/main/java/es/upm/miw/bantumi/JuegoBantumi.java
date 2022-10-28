@@ -35,13 +35,19 @@ public class JuegoBantumi {
         return this.getSemillas(DEPOSITO_OPONENTE);
     }
 
+    public void setNumInicialSemillas(int numInicialSemillas) {
+        this.numInicialSemillas = numInicialSemillas;
+    }
+
     // Turno juego
     public enum Turno {
         turnoJ1, turnoJ2, Turno_TERMINADO
     }
 
     // Número inicial de semillas
-    private final int numInicialSemillas;
+    private int numInicialSemillas;
+
+    private Turno turnoInicial;
 
     /**
      * Constructor
@@ -54,8 +60,9 @@ public class JuegoBantumi {
     public JuegoBantumi(BantumiViewModel bantumiVM, Turno turno, int numInicialSemillas) {
         this.bantumiVM = bantumiVM;
         this.numInicialSemillas = numInicialSemillas;
+        turnoInicial = turno;
         if (campoVacio(Turno.turnoJ1) && campoVacio(Turno.turnoJ2)) { // Inicializa sólo si está vacío!!!
-            inicializar(turno);
+            inicializar();
         }
     }
 
@@ -80,10 +87,9 @@ public class JuegoBantumi {
     /**
      * Inicializa el estado del juego (almacenes vacíos y campos con semillas)
      *
-     * @param turno especifica el turno inicial <code>[Turno.turnoJ1 || Turno.turnoJ2]</code>
      */
-    public void inicializar(Turno turno) {
-        setTurno(turno);
+    public void inicializar() {
+        setTurno(turnoInicial);
         for (int i = 0; i < NUM_POSICIONES; i++)
             setSemillas(
                     i,
@@ -91,6 +97,7 @@ public class JuegoBantumi {
                             ? 0
                             : numInicialSemillas
             );
+        bantumiVM.restartTimer();
     }
 
     /**
@@ -253,5 +260,9 @@ public class JuegoBantumi {
     public void recuperar(FileManager fileManager) {
         String datos = fileManager.load();
         this.deserializa(datos);
+    }
+
+    public void setTurnoInicial(Turno turnoInicial) {
+        this.turnoInicial = turnoInicial;
     }
 }

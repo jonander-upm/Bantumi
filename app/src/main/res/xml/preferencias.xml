@@ -12,4 +12,22 @@
             app:singleLine="true">
         </EditTextPreference>
     </PreferenceCategory>
+    <PreferenceCategory
+        android:key="@string/pref_game"
+        android:title="@string/txtGamePreferences"
+        android:summary="@string/txtRestartRequired">
+        <EditTextPreference
+            android:key="@string/keySeedNumber"
+            android:title="@string/txtSeedNumber"
+            android:inputType="number"
+            android:defaultValue="@integer/intNumInicialSemillas"
+            app:useSimpleSummaryProvider="true"
+            app:singleLine="true">
+        </EditTextPreference>
+        <SwitchPreference
+            android:key="@string/keyFirstPlayer"
+            android:title="@string/txtFirstPlayer"
+            android:summaryOff="@string/txtPlayer1"
+            android:summaryOn="@string/txtPlayer2" />
+    </PreferenceCategory>
 </PreferenceScreen>
