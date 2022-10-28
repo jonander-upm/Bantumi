@@ -43,16 +43,18 @@ public class MainActivity extends AppCompatActivity {
     FileManager fileManager;
     PuntuacionViewModel puntuacionViewModel;
     int numInicialSemillas;
+    JuegoBantumi.Turno turnoInicial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         tvJugador1 = findViewById(R.id.tvPlayer1);
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
-        numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
-        juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
+        loadGamePreferences();
+        juegoBantumi = new JuegoBantumi(bantumiVM, turnoInicial, numInicialSemillas);
         puntuacionViewModel = new ViewModelProvider(this).get(PuntuacionViewModel.class);
         crearObservadores();
         fileManager = FileManager.builder()
@@ -66,6 +68,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        loadUserPreferences();
+        loadGamePreferences();
+    }
+
+    public void loadUserPreferences() {
         username = preferencias.getString(
                 getString(R.string.keyUsername),
                 getString(R.string.usernameDefault));
@@ -73,10 +80,20 @@ public class MainActivity extends AppCompatActivity {
             username = getString(R.string.usernameDefault);
         }
         tvJugador1.setText(username);
+    }
+
+    public void loadGamePreferences() {
         numInicialSemillas = Integer.parseInt(preferencias.getString(
                 getString(R.string.keySeedNumber),
                 String.valueOf(R.integer.intNumInicialSemillas)));
-        juegoBantumi.setNumInicialSemillas(numInicialSemillas);
+        boolean switchJugadorInicial = preferencias.getBoolean(getString(R.string.keyFirstPlayer), false);
+        turnoInicial = (!switchJugadorInicial)
+                ? JuegoBantumi.Turno.turnoJ1
+                : JuegoBantumi.Turno.turnoJ2;
+        if(juegoBantumi != null) {
+            juegoBantumi.setNumInicialSemillas(numInicialSemillas);
+            juegoBantumi.setTurnoInicial(turnoInicial);
+        }
     }
 
     /**
