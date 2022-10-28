@@ -66,5 +66,11 @@
     <string name="txtScoreboard">Mejores Resultados</string>
     <string name="txtPlayerScore">Puntuación Usuario:</string>
     <string name="txtComputerScore">Puntuación Ordenador:</string>
+    <string name="txtEliminarPuntuaciones">Eliminar Puntuaciones</string>
+    <string name="txtPuntuacionesEliminadas">Se han eliminado las puntuaciones</string>
+    <string name="txtDialogoEliminarPuntuacionesTitulo">Eliminar Puntuaciones</string>
+    <string name="txtDialogoEliminarPuntuacionesPregunta">¿Desea eliminar todas las puntuaciones?</string>
+    <string name="txtDialogoEliminarPuntuacionesNegativo">Cancelar</string>
+    <string name="txtDialogoEliminarPuntuacionesAfirmativo">Eliminar</string>
 
 </resources>

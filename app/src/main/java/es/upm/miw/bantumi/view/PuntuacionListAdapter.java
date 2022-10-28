@@ -5,10 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class PuntuacionListAdapter extends BaseAdapter {
     List<PuntuacionEntity> puntuaciones;
     LayoutInflater inflater;
 
-    public PuntuacionListAdapter(Context applicationContext, List<PuntuacionEntity> puntuaciones) {
+    public PuntuacionListAdapter(Context applicationContext, List<PuntuacionEntity>  puntuaciones) {
         this.context = context;
         this.puntuaciones = puntuaciones;
         inflater = (LayoutInflater.from(applicationContext));
@@ -28,17 +27,23 @@ public class PuntuacionListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return puntuaciones.size();
+        return puntuaciones != null ?
+                puntuaciones.size()
+                : 0;
     }
 
     @Override
     public Object getItem(int i) {
-        return puntuaciones.get(i);
+        return puntuaciones != null ?
+                puntuaciones.get(i)
+                : null;
     }
 
     @Override
     public long getItemId(int i) {
-        return puntuaciones.get(i).getUsername().hashCode();
+        return puntuaciones != null ?
+                puntuaciones.get(i).getUsername().hashCode()
+                : -1;
     }
 
     @Override
@@ -47,9 +52,11 @@ public class PuntuacionListAdapter extends BaseAdapter {
         TextView tvUsername = view.findViewById(R.id.tvUsername);
         TextView tvPlayerScore = view.findViewById(R.id.tvPlayerScore);
         TextView tvComputerScore = view.findViewById(R.id.tvComputerScore);
-        tvUsername.setText(puntuaciones.get(i).getUsername());
-        tvPlayerScore.setText(String.valueOf(puntuaciones.get(i).getPlayerSeeds()));
-        tvComputerScore.setText(String.valueOf(puntuaciones.get(i).getOpponentSeeds()));
+        if(puntuaciones != null) {
+            tvUsername.setText(puntuaciones.get(i).getUsername());
+            tvPlayerScore.setText(String.valueOf(puntuaciones.get(i).getPlayerSeeds()));
+            tvComputerScore.setText(String.valueOf(puntuaciones.get(i).getOpponentSeeds()));
+        }
         return view;
     }
 }

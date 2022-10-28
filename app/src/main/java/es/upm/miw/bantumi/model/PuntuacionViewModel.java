@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
@@ -15,12 +16,16 @@ public class PuntuacionViewModel extends AndroidViewModel {
         puntuacionRepository = new PuntuacionRepository(application);
     }
 
-    public List<PuntuacionEntity> findTopTen() {
+    public LiveData<List<PuntuacionEntity>> findTopTen() {
         return puntuacionRepository.findTopTen();
     }
 
     public void insert(PuntuacionEntity item) {
         puntuacionRepository.insert(item);
+    }
+
+    public void deleteAll() {
+        puntuacionRepository.deleteAll();
     }
 
 }
