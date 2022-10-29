@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                         duracionPartidaSegundos = millis / 1000;
                         int minutes = duracionPartidaSegundos.intValue() / 60;
                         int seconds = duracionPartidaSegundos.intValue() % 60;
-                        String timeText = String.format("%d:%02d", minutes, seconds);
+                        String timeText = String.format(Locale.getDefault(), "%d:%02d", minutes, seconds);
                         tvTimer.setText(timeText);
                     }
                 }
