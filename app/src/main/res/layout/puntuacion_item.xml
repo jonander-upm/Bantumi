@@ -3,11 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
+
     <TextView
         android:id="@+id/tvUsername"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:textColor="@color/teal_200"
+        android:textStyle="bold" />
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -22,7 +26,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="@string/txtPlayerScore"/>
+                android:text="@string/txtPlayerScore"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/tvPlayerScore"
                 android:layout_width="0dp"
@@ -38,7 +43,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="@string/txtComputerScore"/>
+                android:text="@string/txtComputerScore"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/tvComputerScore"
                 android:layout_width="0dp"
@@ -54,7 +60,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="@string/txtDurationScore"/>
+                android:text="@string/txtDurationScore"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/tvDurationScore"
                 android:layout_width="0dp"
